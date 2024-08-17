@@ -12,15 +12,41 @@ from PyQt5.QtMultimediaWidgets import QVideoWidget
 class ImageVideoApp(QWidget):
     def __init__(self):
         super().__init__()
-
-        self.initUI()
+        self.initUI()  # Call to initialize the UI
 
     def initUI(self):
-        self.setWindowTitle("Image and Video Display Example")
+        self.setWindowTitle("Ultrasound GUI")
         self.setGeometry(100, 100, 1200, 600)
 
-        # Create a horizontal layout to place image and video side by side
+        # Create a horizontal layout for the main sections
         hbox_main = QHBoxLayout()
+
+        # Create a vertical layout for the buttons
+        vbox_buttons = QVBoxLayout()
+
+        # Create buttons and add them to the vertical layout
+        self.upload_button = QPushButton("Upload Image", self)
+        self.upload_button.clicked.connect(self.upload_image)
+        vbox_buttons.addWidget(self.upload_button)
+
+        self.zoom_in_button = QPushButton("Zoom In", self)
+        self.zoom_in_button.clicked.connect(self.zoom_in)
+        vbox_buttons.addWidget(self.zoom_in_button)
+
+        self.zoom_out_button = QPushButton("Zoom Out", self)
+        self.zoom_out_button.clicked.connect(self.zoom_out)
+        vbox_buttons.addWidget(self.zoom_out_button)
+
+        self.ultrasound_button = QPushButton("Generate Ultrasound Image", self)
+        self.ultrasound_button.clicked.connect(self.generate_ultrasound_image)
+        vbox_buttons.addWidget(self.ultrasound_button)
+
+        # self.upload_video_button = QPushButton("Upload Video", self)
+        # self.upload_video_button.clicked.connect(self.upload_video)
+        # vbox_buttons.addWidget(self.upload_video_button)
+
+        # Add the button vertical layout to the main horizontal layout
+        hbox_main.addLayout(vbox_buttons)
 
         # Create a vertical layout for the image section
         vbox_image = QVBoxLayout()
@@ -36,32 +62,6 @@ class ImageVideoApp(QWidget):
         
         vbox_image.addWidget(self.scroll_area)
 
-        # Create a horizontal layout for image buttons
-        hbox_image_buttons = QHBoxLayout()
-
-        # Create an upload image button
-        self.upload_button = QPushButton("Upload Image", self)
-        self.upload_button.clicked.connect(self.upload_image)
-        hbox_image_buttons.addWidget(self.upload_button)
-
-        # Create a zoom in button
-        self.zoom_in_button = QPushButton("Zoom In", self)
-        self.zoom_in_button.clicked.connect(self.zoom_in)
-        hbox_image_buttons.addWidget(self.zoom_in_button)
-
-        # Create a zoom out button
-        self.zoom_out_button = QPushButton("Zoom Out", self)
-        self.zoom_out_button.clicked.connect(self.zoom_out)
-        hbox_image_buttons.addWidget(self.zoom_out_button)
-
-        # Add the image buttons to the vertical layout
-        vbox_image.addLayout(hbox_image_buttons)
-
-        # Create a generate ultrasound image button
-        self.ultrasound_button = QPushButton("Generate Ultrasound Image", self)
-        self.ultrasound_button.clicked.connect(self.generate_ultrasound_image)
-        vbox_image.addWidget(self.ultrasound_button)
-
         # Add the image section to the main horizontal layout
         hbox_main.addLayout(vbox_image)
 
@@ -76,11 +76,6 @@ class ImageVideoApp(QWidget):
         self.media_player.setVideoOutput(self.video_widget)
 
         vbox_video.addWidget(self.video_widget)
-
-        # Create an upload video button
-        self.upload_video_button = QPushButton("Upload Video", self)
-        self.upload_video_button.clicked.connect(self.upload_video)
-        vbox_video.addWidget(self.upload_video_button)
 
         # Add the video section to the main horizontal layout
         hbox_main.addLayout(vbox_video)
